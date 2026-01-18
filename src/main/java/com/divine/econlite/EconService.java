@@ -16,7 +16,11 @@ public final class EconService {
     }
 
     public String symbol() {
-        return plugin.getConfig().getString("currency.symbol", "Coins");
+        String name = plugin.getConfig().getString("currency-name", "");
+        if (name == null || name.isBlank()) {
+            name = plugin.getConfig().getString("currency.symbol", "Coins");
+        }
+        return name;
     }
 
     public double wallet(UUID uuid) {
