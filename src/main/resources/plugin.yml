@@ -17,7 +17,7 @@ commands:
     usage: /bank <deposit|withdraw|bal> [金额]
   divineecon:
     description: 管理命令
-    usage: /divineecon <reload|set|give|take> ...
+    usage: /divineecon <reload|set|give|take|add|remove> ...
 permissions:
   divineecon.use:
     default: true
@@ -32,6 +32,16 @@ permissions:
   divineecon.death.bypass:
     default: false
   divineecon.admin:
+    default: op
+  divineecon.admin.set:
+    default: op
+  divineecon.admin.give:
+    default: op
+  divineecon.admin.take:
+    default: op
+  divineecon.admin.add:
+    default: op
+  divineecon.admin.remove:
     default: op
   divineecon.reload:
     default: op

@@ -51,6 +51,10 @@ Java：17
 
 /divineecon set <玩家> <wallet|bank> <金额> 管理员设置余额
 
+/divineecon give|add <玩家> <wallet|bank> <金额> 管理员增加余额
+
+/divineecon take|remove <玩家> <wallet|bank> <金额> 管理员减少余额
+
 权限
 
 divineecon.use 允许使用 /money
@@ -60,6 +64,16 @@ divineecon.pay 允许使用 /pay
 divineecon.bank 允许使用 /bank
 
 divineecon.admin 允许使用 /divineecon set
+
+divineecon.admin.set 允许使用 /divineecon set
+
+divineecon.admin.give 允许使用 /divineecon give
+
+divineecon.admin.take 允许使用 /divineecon take
+
+divineecon.admin.add 允许使用 /divineecon add
+
+divineecon.admin.remove 允许使用 /divineecon remove
 
 divineecon.reload 允许使用 /divineecon reload
 
