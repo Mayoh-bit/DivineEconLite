@@ -10,6 +10,8 @@ DivineEconLite 是一款轻量经济插件，主打三件事：杀怪给钱，�
 
 2）击杀掉钱
 支持按怪物类型设置奖励区间（最小值与最大值），支持默认值兜底。
+支持击杀奖励提示与每日上限配置，0 表示不限制。
+支持实体名别名配置，方便适配不同游戏版本的实体命名。
 
 3）指令收费
 可在 config.yml 里配置需要收费的指令与金额。
@@ -25,7 +27,7 @@ DivineEconLite 是一款轻量经济插件，主打三件事：杀怪给钱，�
 
 二，适用版本与依赖
 
-支持：Spigot 1.20.1 及兼容实现
+支持：Spigot 1.20.1 及兼容实现（可通过实体别名兼容不同版本的怪物命名）
 
 Java：17
 
@@ -86,6 +88,10 @@ kill-rewards.default.max: 4
 kill-rewards.by-entity.ZOMBIE.min: 4
 
 kill-rewards.by-entity.ZOMBIE.max: 8
+
+如需兼容旧版本怪物名，可配置 entity-aliases。例如：
+
+kill-rewards.entity-aliases.PIG_ZOMBIE: ZOMBIFIED_PIGLIN
 
 
 同理可加更多实体类型，实体名使用 Bukkit 的 EntityType 枚举名。

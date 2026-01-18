@@ -38,7 +38,14 @@ public final class EconomyListeners implements Listener {
         double reward = rollKillReward(e.getEntityType());
         if (reward <= 0.0) return;
 
-        econ.applyKillRewardWithDailyCap(killer.getUniqueId(), reward);
+        double applied = econ.applyKillRewardWithDailyCap(killer.getUniqueId(), reward);
+        if (applied <= 0.0) return;
+
+        String msg = plugin.getConfig().getString("messages.kill-reward", "");
+        msg = msg.replace("{amount}", format(applied))
+                .replace("{symbol}", econ.symbol())
+                .replace("{mob}", e.getEntityType().name());
+        send(killer, msg);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -139,19 +146,27 @@ public final class EconomyListeners implements Listener {
     }
 
     private double rollKillReward(EntityType type) {
-        String basePath = "kill-rewards.by-entity." + type.name();
+        String typeName = resolveEntityKey(type);
+        String basePath = "kill-rewards.by-entity." + typeName;
         double defaultMin = plugin.getConfig().getDouble("kill-rewards.default.min",
                 plugin.getConfig().getDouble("kill-rewards.default", 0.0));
         double defaultMax = plugin.getConfig().getDouble("kill-rewards.default.max",
                 plugin.getConfig().getDouble("kill-rewards.default", defaultMin));
         double min = plugin.getConfig().getDouble(basePath + ".min",
-                plugin.getConfig().getDouble("kill-rewards.per-mob." + type.name(), defaultMin));
+                plugin.getConfig().getDouble("kill-rewards.per-mob." + typeName, defaultMin));
         double max = plugin.getConfig().getDouble(basePath + ".max",
-                plugin.getConfig().getDouble("kill-rewards.per-mob." + type.name(), defaultMax));
+                plugin.getConfig().getDouble("kill-rewards.per-mob." + typeName, defaultMax));
         if (min <= 0.0 && max <= 0.0) return 0.0;
         if (max < min) max = min;
         if (Math.abs(max - min) < 1e-9) return min;
         return ThreadLocalRandom.current().nextDouble(min, max);
+    }
+
+    private String resolveEntityKey(EntityType type) {
+        String name = type.name();
+        String alias = plugin.getConfig().getString("kill-rewards.entity-aliases." + name);
+        if (alias == null || alias.isBlank()) return name;
+        return alias.trim().toUpperCase(Locale.ROOT);
     }
 
     private void send(Player p, String raw) {
