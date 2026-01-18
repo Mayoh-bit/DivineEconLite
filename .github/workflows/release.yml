@@ -54,11 +54,17 @@ jobs:
         run: mvn -B -ntp -DskipTests package
 
       - name: Collect artifacts
+        env:
+          RELEASE_TAG: ${{ github.event.inputs.tag || github.ref_name }}
         run: |
           mkdir -p out
+          ARTIFACT_ID=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.artifactId)
           # copy shaded jar if present, otherwise normal jar
           ls -la target || true
-          cp -v target/*.jar out/ || true
+          for jar in target/*.jar; do
+            [ -e "$jar" ] || continue
+            cp -v "$jar" "out/${ARTIFACT_ID}-${RELEASE_TAG}.jar"
+          done
 
       - name: Create GitHub Release
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
