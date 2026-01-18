@@ -16,10 +16,16 @@ kill-rewards:
   # 设为 true 时，玩家必须对怪物造成最后一击
   require-player-kill: true
   # 每日最高获得金币，0 为不限制
-  daily-cap: 50000.0
+  daily-cap: 0.0
   default:
     min: 2.0
     max: 4.0
+  # 多版本怪物名兼容（旧版本 -> 新版本）
+  entity-aliases:
+    PIG_ZOMBIE: ZOMBIFIED_PIGLIN
+    ZOMBIE_PIGMAN: ZOMBIFIED_PIGLIN
+    MUSHROOM_COW: MOOSHROOM
+    SNOWMAN: SNOW_GOLEM
   by-entity:
     ZOMBIE:
       min: 4.0
@@ -112,6 +118,7 @@ messages:
   balance: "&a钱包: &e{wallet} {symbol}  &a银行: &e{bank} {symbol}"
   insufficient: "&c钱包余额不足。需要 {need} {symbol}。"
   paid: "&e已支付 {cost} {symbol}。"
+  kill-reward: "&a击杀 &e{mob}&a 获得 &e{amount} {symbol}"
   death-loss: "&c死亡损失: &e{loss} {symbol} &c已从钱包扣除。"
   bank-deposit-ok: "&a已存入银行: &e{amount} {symbol}"
   bank-withdraw-ok: "&a已从银行取出: &e{amount} {symbol}"

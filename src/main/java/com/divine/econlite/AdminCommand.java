@@ -5,7 +5,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
+
+import java.util.UUID;
 
 public final class AdminCommand implements CommandExecutor {
     private final DivineEconLitePlugin plugin;
@@ -33,15 +35,15 @@ public final class AdminCommand implements CommandExecutor {
             return true;
         }
 
-        if (!sender.hasPermission("divineecon.admin")) {
+        if (!hasAdminPermission(sender, sub)) {
             sender.sendMessage(color(plugin.getConfig().getString("messages.prefix", "") + plugin.getConfig().getString("messages.no-permission", "")));
             return true;
         }
 
         if (args.length < 4) return false;
-        Player target = Bukkit.getPlayerExact(args[1]);
-        if (target == null) {
-            sender.sendMessage("Player offline.");
+        OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
+        if (target == null || (!target.isOnline() && !target.hasPlayedBefore())) {
+            sender.sendMessage("Player not found.");
             return true;
         }
         String which = args[2].toLowerCase();
@@ -51,28 +53,30 @@ public final class AdminCommand implements CommandExecutor {
         } catch (NumberFormatException ex) {
             return false;
         }
+        if (amount < 0.0) return false;
+        UUID uuid = target.getUniqueId();
 
         if (sub.equals("set")) {
-            if (which.equals("wallet")) econ.setWallet(target.getUniqueId(), amount);
-            else if (which.equals("bank")) econ.setBank(target.getUniqueId(), amount);
+            if (which.equals("wallet")) econ.setWallet(uuid, amount);
+            else if (which.equals("bank")) econ.setBank(uuid, amount);
             else return false;
             store.save();
             sender.sendMessage("OK");
             return true;
         }
 
-        if (sub.equals("give")) {
-            if (which.equals("wallet")) econ.depositWallet(target.getUniqueId(), amount);
-            else if (which.equals("bank")) econ.setBank(target.getUniqueId(), econ.bank(target.getUniqueId()) + Math.max(0.0, amount));
+        if (sub.equals("give") || sub.equals("add")) {
+            if (which.equals("wallet")) econ.depositWallet(uuid, amount);
+            else if (which.equals("bank")) econ.setBank(uuid, econ.bank(uuid) + amount);
             else return false;
             store.save();
             sender.sendMessage("OK");
             return true;
         }
 
-        if (sub.equals("take")) {
-            if (which.equals("wallet")) econ.withdrawWallet(target.getUniqueId(), Math.max(0.0, amount));
-            else if (which.equals("bank")) econ.setBank(target.getUniqueId(), Math.max(0.0, econ.bank(target.getUniqueId()) - Math.max(0.0, amount)));
+        if (sub.equals("take") || sub.equals("remove")) {
+            if (which.equals("wallet")) econ.withdrawWallet(uuid, amount);
+            else if (which.equals("bank")) econ.setBank(uuid, Math.max(0.0, econ.bank(uuid) - amount));
             else return false;
             store.save();
             sender.sendMessage("OK");
@@ -84,5 +88,17 @@ public final class AdminCommand implements CommandExecutor {
 
     private String color(String s) {
         return ChatColor.translateAlternateColorCodes('&', s);
+    }
+
+    private boolean hasAdminPermission(CommandSender sender, String sub) {
+        if (sender.hasPermission("divineecon.admin")) return true;
+        return switch (sub) {
+            case "set" -> sender.hasPermission("divineecon.admin.set");
+            case "give" -> sender.hasPermission("divineecon.admin.give");
+            case "take" -> sender.hasPermission("divineecon.admin.take");
+            case "add" -> sender.hasPermission("divineecon.admin.add");
+            case "remove" -> sender.hasPermission("divineecon.admin.remove");
+            default -> false;
+        };
     }
 }
