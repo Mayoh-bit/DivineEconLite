@@ -1,0 +1,83 @@
+# DivineEconLite 默认配置
+# 数据保存于 plugins/DivineEconLite/data.yml
+
+currency:
+  symbol: "金币"
+  format: "{amount} {symbol}"
+
+starting-balance:
+  wallet: 0.0
+  bank: 0.0
+
+# 击杀掉钱
+kill-rewards:
+  enabled: true
+  # 设为 true 时，玩家必须对怪物造成最后一击
+  require-player-kill: true
+  # 每日最高获得金币，0 为不限制
+  daily-cap: 50000.0
+  default: 2.0
+  per-mob:
+    ZOMBIE: 6.0
+    SKELETON: 6.0
+    SPIDER: 5.0
+    CREEPER: 8.0
+    ENDERMAN: 12.0
+    WITCH: 12.0
+    BLAZE: 12.0
+    WITHER_SKELETON: 16.0
+    PIGLIN_BRUTE: 16.0
+    GUARDIAN: 18.0
+    ELDER_GUARDIAN: 50.0
+    SHULKER: 20.0
+    WARDEN: 150.0
+    WITHER: 250.0
+    ENDER_DRAGON: 500.0
+
+# 死亡扣钱
+death-penalty:
+  enabled: true
+  # 扣除钱包的比例，50 代表 50%
+  wallet-loss-percent: 50.0
+  # 银行余额不受影响
+
+# 指令扣费
+command-fees:
+  enabled: true
+  # 对指令扣费的默认提示，支持 {cost} {symbol} {cmd}
+  message: "&e执行指令需要花费 &6{cost} {symbol}&e，已从钱包扣除。"
+  # 禁止扣费的指令，用于保留辅助交互
+  exempt:
+    - "/msg"
+    - "/r"
+    - "/reply"
+    - "/tell"
+    - "/w"
+    - "/ignore"
+    - "/money"
+    - "/bal"
+    - "/balance"
+    - "/bank"
+    - "/pay"
+  fees:
+    "/spawn": 20.0
+    "/home": 30.0
+    "/sethome": 80.0
+    "/delhome": 10.0
+    "/rtp": 120.0
+    "/tpa": 30.0
+    "/back": 80.0
+    "/warp": 50.0
+
+messages:
+  prefix: "&b[Divine]&r "
+  no-permission: "&c你没有权限使用该功能。"
+  balance: "&a钱包: &e{wallet} {symbol}  &a银行: &e{bank} {symbol}"
+  insufficient: "&c钱包余额不足。需要 {need} {symbol}。"
+  paid: "&e已支付 {cost} {symbol}。"
+  death-loss: "&c死亡损失: &e{loss} {symbol} &c已从钱包扣除。"
+  bank-deposit-ok: "&a已存入银行: &e{amount} {symbol}"
+  bank-withdraw-ok: "&a已从银行取出: &e{amount} {symbol}"
+  pay-ok: "&a你已向 &e{target}&a 转账 &e{amount} {symbol}"
+  pay-received: "&a你收到来自 &e{from}&a 的转账 &e{amount} {symbol}"
+  reload-ok: "&a配置已重载。"

@@ -1,0 +1,33 @@
+name: DivineEconLite
+main: com.divine.econlite.DivineEconLitePlugin
+version: 1.0.0
+api-version: 1.20
+load: STARTUP
+softdepend: [Vault]
+author: Divine
+commands:
+  money:
+    description: 查看余额
+    usage: /money
+  pay:
+    description: 转账
+    usage: /pay <玩家> <金额>
+  bank:
+    description: 钱包与银行转入转出
+    usage: /bank <deposit|withdraw|bal> [金额]
+  divineecon:
+    description: 管理命令
+    usage: /divineecon <reload|set|give|take> ...
+permissions:
+  divineecon.use:
+    default: true
+  divineecon.pay:
+    default: true
+  divineecon.bank:
+    default: true
+  divineecon.fee.bypass:
+    default: false
+  divineecon.admin:
+    default: op
+  divineecon.reload:
+    default: op
