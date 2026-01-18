@@ -87,7 +87,8 @@ public final class BalanceStore {
 
     public Balances ensure(UUID uuid) {
         return balances.computeIfAbsent(uuid, u -> {
-            double sw = plugin.getConfig().getDouble("starting-balance.wallet", 0.0);
+            double sw = plugin.getConfig().getDouble("starting-balance.wallet",
+                    plugin.getConfig().getDouble("starting-balance", 0.0));
             double sb = plugin.getConfig().getDouble("starting-balance.bank", 0.0);
             return new Balances(sw, sb);
         });

@@ -27,6 +27,10 @@ permissions:
     default: true
   divineecon.fee.bypass:
     default: false
+  divineecon.fees.bypass:
+    default: false
+  divineecon.death.bypass:
+    default: false
   divineecon.admin:
     default: op
   divineecon.reload:

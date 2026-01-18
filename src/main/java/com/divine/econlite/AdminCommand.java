@@ -20,10 +20,6 @@ public final class AdminCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!sender.hasPermission("divineecon.admin")) {
-            sender.sendMessage(color(plugin.getConfig().getString("messages.prefix", "") + plugin.getConfig().getString("messages.no-permission", "")));
-            return true;
-        }
         if (args.length < 1) return false;
         String sub = args[0].toLowerCase();
 
@@ -34,6 +30,11 @@ public final class AdminCommand implements CommandExecutor {
             }
             plugin.reloadConfig();
             sender.sendMessage(color(plugin.getConfig().getString("messages.prefix", "") + plugin.getConfig().getString("messages.reload-ok", "")));
+            return true;
+        }
+
+        if (!sender.hasPermission("divineecon.admin")) {
+            sender.sendMessage(color(plugin.getConfig().getString("messages.prefix", "") + plugin.getConfig().getString("messages.no-permission", "")));
             return true;
         }
 

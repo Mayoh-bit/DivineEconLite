@@ -1,6 +1,7 @@
 # DivineEconLite 默认配置
 # 数据保存于 plugins/DivineEconLite/data.yml
 
+currency-name: "金币"
 currency:
   symbol: "金币"
   format: "{amount} {symbol}"
@@ -16,23 +17,55 @@ kill-rewards:
   require-player-kill: true
   # 每日最高获得金币，0 为不限制
   daily-cap: 50000.0
-  default: 2.0
-  per-mob:
-    ZOMBIE: 6.0
-    SKELETON: 6.0
-    SPIDER: 5.0
-    CREEPER: 8.0
-    ENDERMAN: 12.0
-    WITCH: 12.0
-    BLAZE: 12.0
-    WITHER_SKELETON: 16.0
-    PIGLIN_BRUTE: 16.0
-    GUARDIAN: 18.0
-    ELDER_GUARDIAN: 50.0
-    SHULKER: 20.0
-    WARDEN: 150.0
-    WITHER: 250.0
-    ENDER_DRAGON: 500.0
+  default:
+    min: 2.0
+    max: 4.0
+  by-entity:
+    ZOMBIE:
+      min: 4.0
+      max: 8.0
+    SKELETON:
+      min: 4.0
+      max: 8.0
+    SPIDER:
+      min: 3.0
+      max: 6.0
+    CREEPER:
+      min: 6.0
+      max: 10.0
+    ENDERMAN:
+      min: 10.0
+      max: 14.0
+    WITCH:
+      min: 10.0
+      max: 14.0
+    BLAZE:
+      min: 10.0
+      max: 14.0
+    WITHER_SKELETON:
+      min: 14.0
+      max: 18.0
+    PIGLIN_BRUTE:
+      min: 14.0
+      max: 18.0
+    GUARDIAN:
+      min: 16.0
+      max: 20.0
+    ELDER_GUARDIAN:
+      min: 40.0
+      max: 60.0
+    SHULKER:
+      min: 18.0
+      max: 22.0
+    WARDEN:
+      min: 120.0
+      max: 180.0
+    WITHER:
+      min: 200.0
+      max: 300.0
+    ENDER_DRAGON:
+      min: 400.0
+      max: 600.0
 
 # 死亡扣钱
 death-penalty:
@@ -44,6 +77,10 @@ death-penalty:
 # 指令扣费
 command-fees:
   enabled: true
+  # 二次确认，避免误扣费
+  confirm: true
+  confirm-timeout-seconds: 10
+  confirm-message: "&e该指令需花费 &6{cost} {symbol}&e，请在 {seconds} 秒内再次输入确认。"
   # 对指令扣费的默认提示，支持 {cost} {symbol} {cmd}
   message: "&e执行指令需要花费 &6{cost} {symbol}&e，已从钱包扣除。"
   # 禁止扣费的指令，用于保留辅助交互
@@ -59,15 +96,15 @@ command-fees:
     - "/balance"
     - "/bank"
     - "/pay"
-  fees:
-    "/spawn": 20.0
-    "/home": 30.0
-    "/sethome": 80.0
-    "/delhome": 10.0
-    "/rtp": 120.0
-    "/tpa": 30.0
-    "/back": 80.0
-    "/warp": 50.0
+  list:
+    spawn: 20.0
+    home: 30.0
+    sethome: 80.0
+    delhome: 10.0
+    rtp: 120.0
+    tpa: 30.0
+    back: 80.0
+    warp: 50.0
 
 messages:
   prefix: "&b[Divine]&r "
