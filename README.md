@@ -35,20 +35,31 @@ Java：17
 命令
 
 /money 查看钱包与银行
+
 /pay <玩家> <金额> 转账，扣钱包
+
 /bank deposit <金额> 存入银行
+
 /bank withdraw <金额> 取出到钱包
+
 /divineecon reload 重载配置
+
 /divineecon set <玩家> <wallet|bank> <金额> 管理员设置余额
 
 权限
 
 divineecon.use 允许使用 /money
+
 divineecon.pay 允许使用 /pay
+
 divineecon.bank 允许使用 /bank
+
 divineecon.admin 允许使用 /divineecon set
+
 divineecon.reload 允许使用 /divineecon reload
+
 divineecon.fees.bypass 免指令收费
+
 divineecon.death.bypass 免死亡惩罚
 
 四，配置示例
@@ -58,27 +69,40 @@ divineecon.death.bypass 免死亡惩罚
 经济参数
 
 starting-balance: 0
+
 death-penalty-percent: 50
+
 currency-name: 金币
 
 击杀奖励
 
 kill-rewards.default.min: 2
+
 kill-rewards.default.max: 4
+
 kill-rewards.by-entity.ZOMBIE.min: 4
+
 kill-rewards.by-entity.ZOMBIE.max: 8
+
 
 同理可加更多实体类型，实体名使用 Bukkit 的 EntityType 枚举名。
 
 指令收费
 
 command-fees.enabled: true
+
 command-fees.confirm: true
+
 command-fees.list:
+
 spawn: 20
+
 home: 30
+
 sethome: 80
+
 tpa: 30
+
 rtp: 120
 
 你可继续加更多指令，按“主命令”填写即可，例如 warp，back。
@@ -88,11 +112,13 @@ rtp: 120
 1）构建
 
 解压源码包后在目录执行：mvn package
+
 生成文件在 target/divineeconlite-1.0.0.jar
 
 2）安装
 
 把 jar 放入 plugins 目录，启动服务器生成配置。
+
 如需对外提供经济接口，安装 Vault 并重启。
 
 六，常见问题
@@ -100,6 +126,7 @@ rtp: 120
 1）与现有经济插件冲突
 
 若你已经使用其它经济插件并且它同样向 Vault 提供 Economy 服务，建议二选一。
+
 DivineEconLite 的定位是轻量一体化经济与收费体系。
 
 2）如何只用指令收费，不用本插件做经济
